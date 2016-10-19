@@ -15,9 +15,11 @@
     "@types/glob": "^5.0.30",
     "@types/mkdirp": "^0.3.29",
     "@types/node": "^6.0.45",
-    "glob": "^7.1.1",
-    "mkdirp": "^0.5.1",
     "tslint": "^3.15.1",
     "typescript": "^2.0.3"
+  },
+  "dependencies": {
+    "glob": "^7.1.1",
+    "mkdirp": "^0.5.1"
   }
 }
