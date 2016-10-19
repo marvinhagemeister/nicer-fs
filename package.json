@@ -2,7 +2,7 @@
   "name": "nicer-fs",
   "version": "0.1.0",
   "description": "Collection of helpful utillity functions when dealing with files in node",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "tslint index.ts",
     "build": "tsc",

@@ -1,0 +1,6 @@
+.gitignore
+.editorconfig
+tslint.json
+tsconfig.json
+node_modules/
+index.ts
