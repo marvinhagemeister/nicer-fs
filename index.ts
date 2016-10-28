@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as glob from "glob";
+import * as path from "path";
 import * as mkdirp from "mkdirp";
 
 export function find(globber: string) {
@@ -16,7 +17,8 @@ export function readFile(filepath: string) {
 
 export function writeFile(filepath: string, data: string | Buffer) {
   return new Promise((resolve, reject) => {
-    mkdirp(filepath, err => {
+    const base = path.dirname(filepath);
+    mkdirp(base, err => {
       if (err) {
         reject(err);
       }
