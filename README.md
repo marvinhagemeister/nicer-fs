@@ -5,7 +5,7 @@ promises.
 
 ## Documentation
 
-### `find(globber: string): Promise<string[]>`
+### `find(globber: string, options?: GlobOptions): Promise<string[]>`
 
 Search files that match the given glob path.
 
@@ -13,7 +13,7 @@ Search files that match the given glob path.
 
 Read file with utf-8 encoding and return the content as string.
 
-### `writeFile(path: string, data: string | Buffer): void`
+### `writeFile(path: string, data: string | Buffer): Promise<void>`
 
 Write a file to disk. Parent folders are automatically created if they don't
 exist before the first write operation.
