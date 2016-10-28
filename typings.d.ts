@@ -1,5 +1,7 @@
 declare module 'nicer-fs' {
-  export function find(globber: string): Promise<string[]>;
+  import glob = require("glob");
+
+  export function find(globber: string, options?: glob.IOptions): Promise<string[]>;
   export function readFile(path: string): Promise<string>;
   export function writeFile(path: string, data: string | Buffer): Promise<void>;
 }
