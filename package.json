@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "Collection of helpful utillity functions when dealing with files in node",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:marvinhagemeister/nicer-fs.git"
+  },
   "scripts": {
     "test": "tslint index.ts",
     "build": "tsc",
