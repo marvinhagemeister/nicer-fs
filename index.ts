@@ -9,13 +9,13 @@ export function find(globber: string, options: glob.IOptions = {}) {
   });
 }
 
-export function readFile(filepath: string) {
+export function readFile(filepath: string, encoding: string = null) {
   return new Promise((resolve, reject) => {
-    fs.readFile(filepath, "utf-8", (err, data) => err ? reject(err) : resolve(data));
+    fs.readFile(filepath, encoding, (err, data) => err ? reject(err) : resolve(data));
   });
 }
 
-export function writeFile(filepath: string, data: string | Buffer) {
+export function writeFile(filepath: string, data: string | Buffer, options: any = {}) {
   return new Promise((resolve, reject) => {
     const base = path.dirname(filepath);
     mkdirp(base, err => {
@@ -23,7 +23,7 @@ export function writeFile(filepath: string, data: string | Buffer) {
         reject(err);
       }
 
-      fs.writeFile(filepath, data, err => err ? reject(err) : resolve());
+      fs.writeFile(filepath, data, options, err => err ? reject(err) : resolve());
     });
   });
 }
