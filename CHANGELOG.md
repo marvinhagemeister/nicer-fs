@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+
+- Don't change default encoding
+
 ## 0.3.0
 
 - Add `fs.readdir` promise variant
