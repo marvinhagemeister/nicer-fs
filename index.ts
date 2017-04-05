@@ -9,6 +9,12 @@ export function find(globber: string, options: glob.IOptions = {}) {
   });
 }
 
+export function mkdir(dir: string, flags: any = {}): Promise<string> {
+  return new Promise((resolve, reject) => {
+    mkdirp(dir, flags, (err, res) => err ? reject(err) : resolve(res));
+  });
+}
+
 export function readFile(filepath: string, encoding: string = null) {
   return new Promise((resolve, reject) => {
     fs.readFile(filepath, encoding, (err, data) => err ? reject(err) : resolve(data));

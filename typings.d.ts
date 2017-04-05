@@ -5,4 +5,5 @@ declare module "nicer-fs" {
   export function readFile(filepath: string, encoding?: string): Promise<{}>;
   export function writeFile(filepath: string, data: string | Buffer, options?: any): Promise<{}>;
   export function readDir(folder: string): Promise<string[]>;
+  export function mkdir(dir: string, flags?: any): Promise<string>;
 }
