@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0
+
+- Add `mkdirp` wrapper
+
 ## 0.3.1
 
 - Don't change default encoding
