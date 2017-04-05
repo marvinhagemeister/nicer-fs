@@ -28,7 +28,7 @@ export function writeFile(filepath: string, data: string | Buffer) {
   });
 }
 
-export function readDir(folder: string) {
+export function readDir(folder: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
     fs.readdir(folder, (err, files) => err ? reject(err) : resolve(files));
   });
