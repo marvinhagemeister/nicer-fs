@@ -3,11 +3,7 @@ import * as glob from "glob";
 import * as path from "path";
 import * as mkdirp from "mkdirp";
 
-export function find(globber: string, options?: glob.IOptions) {
-  options = typeof options !== "undefined"
-    ? options
-    : {};
-
+export function find(globber: string, options: glob.IOptions = {}) {
   return new Promise((resolve, reject) => {
     glob(globber, options, (err, files) => err ? reject(err) : resolve(files));
   });
