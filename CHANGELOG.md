@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0
+
+- Add `fs.readdir` promise variant
+
 ## 0.2.0
 
 - Allow passing glob options to `find`
