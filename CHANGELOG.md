@@ -2,6 +2,8 @@
 
 ## next
 
+## 0.5.0
+
 - Add `copyFile` function
 
 ## 0.4.0
