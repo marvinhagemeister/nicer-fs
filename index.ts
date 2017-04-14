@@ -39,3 +39,15 @@ export function readDir(folder: string): Promise<string[]> {
     fs.readdir(folder, (err, files) => err ? reject(err) : resolve(files));
   });
 }
+
+export function copyFile(source: string, target: string) {
+  return new Promise((resolve, reject) => {
+    const read = fs.createReadStream(source);
+    read.on("error", (err: Error) => reject(err));
+
+    const write = fs.createWriteStream(target);
+    write.on("error", (err: Error) => reject(err));
+    write.on("close", () => resolve());
+    read.pipe(write);
+  });
+}
