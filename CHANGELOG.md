@@ -1,5 +1,9 @@
 # Changelog
 
+## next
+
+- Add `copyFile` function
+
 ## 0.4.0
 
 - Add `mkdirp` wrapper
