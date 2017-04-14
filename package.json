@@ -12,10 +12,6 @@
     "build": "tsc",
     "prepublish": "npm t && npm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:marvinhagemeister/nicer-fs.git"
-  },
   "author": "Marvin Hagemeister <marvin@marvinhagemeister.de>",
   "license": "MIT",
   "typings": "typings.d.ts",
