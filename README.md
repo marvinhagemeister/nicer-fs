@@ -10,4 +10,4 @@ promises.
 - `writeFile` - promisified `fs.writeFile`
 - `readDir` - promisified `fs.readDir`
 - `mkdir` - same as `mkdir -p`
-- `copyFile` - same as `mv [source] [target]`
+- `copyFile` - same as `cp [source] [target]`
