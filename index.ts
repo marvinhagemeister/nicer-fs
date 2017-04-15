@@ -15,7 +15,9 @@ export function mkdir(dir: string, flags: any = {}): Promise<string> {
   });
 }
 
-export function readFile(filepath: string, encoding: string = null) {
+export function readFile(filepath: string): Promise<Buffer>;
+export function readFile(filepath: string, encoding: string): Promise<string>;
+export function readFile(filepath: string, encoding: string = null): Promise<string | Buffer> {
   return new Promise((resolve, reject) => {
     fs.readFile(filepath, encoding, (err, data) => err ? reject(err) : resolve(data));
   });
@@ -29,7 +31,8 @@ export function writeFile(filepath: string, data: string | Buffer, options: any 
         reject(err);
       }
 
-      fs.writeFile(filepath, data, options, err => err ? reject(err) : resolve());
+      fs.writeFile(filepath, data, options, err =>
+        err ? reject(err) : resolve());
     });
   });
 }
