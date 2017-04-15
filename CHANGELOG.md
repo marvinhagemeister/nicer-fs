@@ -1,6 +1,9 @@
 # Changelog
 
-## next
+## 0.5.1
+
+- Fix `readFile` typings
+- Fix spelling mistake in `README`
 
 ## 0.5.0
 
