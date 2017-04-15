@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.2
+
+- Don't autogenerate typings. The custom ones are more solid.
+
 ## 0.5.1
 
 - Fix `readFile` typings
