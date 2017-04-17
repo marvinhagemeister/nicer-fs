@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.0
+
+- Add `replaceExtension` function
+- Add unit-tests
+- cleanup empty target file on `copyFile` rejection
+- return path of newly created file for `copyFile`
+
 ## 0.5.2
 
 - Don't autogenerate typings. The custom ones are more solid.
