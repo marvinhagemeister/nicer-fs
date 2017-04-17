@@ -3,9 +3,9 @@ import * as glob from "glob";
 import * as path from "path";
 import * as mkdirp from "mkdirp";
 
-export function find(globber: string, options: glob.IOptions = {}) {
+export function find(globber: string, options: glob.IOptions = {}): Promise<string[]> {
   return new Promise((resolve, reject) => {
-    glob(globber, options, (err, files) => err ? reject(err) : resolve(files));
+    glob(globber, options, (err, files) => err !== null ? reject(err) : resolve(files));
   });
 }
 
@@ -43,14 +43,33 @@ export function readDir(folder: string): Promise<string[]> {
   });
 }
 
-export function copyFile(source: string, target: string) {
+export function deleteFile(file: string | Buffer) {
+  return new Promise((resolve, reject) => {
+    fs.unlink(file, err => err ? reject(err) : resolve());
+  });
+}
+
+export function copyFile(source: string, target: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const read = fs.createReadStream(source);
-    read.on("error", (err: Error) => reject(err));
+    read.on("error", (err: Error) => {
+      // cleanup, target my be created by the time an error occurs
+      const cb = () => reject(err);
+      return deleteFile(target)
+        .then(cb)
+        .catch(cb);
+    });
 
     const write = fs.createWriteStream(target);
     write.on("error", (err: Error) => reject(err));
-    write.on("close", () => resolve());
+    write.on("close", () => resolve(target));
     read.pipe(write);
   });
+}
+
+export function replaceExtension(file: string, ext: string): string {
+  ext = ext !== "" && !ext.startsWith(".") ? "." + ext : ext;
+
+  const nFile = path.basename(file, path.extname(file)) + ext;
+  return path.join(path.dirname(file), nFile);
 }
