@@ -11,3 +11,4 @@ promises.
 - `readDir` - promisified `fs.readDir`
 - `mkdir` - same as `mkdir -p`
 - `copyFile` - same as `cp [source] [target]`
+- `replaceExtension` - easily replace a file extension
