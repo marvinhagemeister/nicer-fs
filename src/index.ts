@@ -43,8 +43,8 @@ export function readDir(folder: string): Promise<string[]> {
   });
 }
 
-export function deleteFile(file: string | Buffer) {
-  return new Promise((resolve, reject) => {
+export function deleteFile(file: string | Buffer): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
     fs.unlink(file, err => err ? reject(err) : resolve());
   });
 }
