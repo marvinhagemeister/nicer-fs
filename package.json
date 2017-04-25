@@ -1,6 +1,6 @@
 {
   "name": "nicer-fs",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Collection of helpful utillity functions when dealing with files in node",
   "main": "dist/index.js",
   "repository": {
