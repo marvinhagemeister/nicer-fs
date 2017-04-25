@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.2
+
+- Fix `deleteFile` typings
+
 ## 0.6.1
 
 - Move `@types/glob` and `@types/node` to `dependencies` (consuming modules would fail)
