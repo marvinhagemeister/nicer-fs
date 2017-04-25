@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.1
+
+- Move `@types/glob` and `@types/node` to `dependencies` (consuming modules would fail)
+- Minor typing enhancements
+
 ## 0.6.0
 
 - Add `replaceExtension` function
