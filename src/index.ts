@@ -23,8 +23,8 @@ export function readFile(filepath: string, encoding: string = null): Promise<str
   });
 }
 
-export function writeFile(filepath: string, data: string | Buffer, options: any = {}) {
-  return new Promise((resolve, reject) => {
+export function writeFile(filepath: string, data: string | Buffer, options: any = {}): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
     const base = path.dirname(filepath);
     mkdirp(base, err => {
       if (err) {
