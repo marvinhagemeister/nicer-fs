@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.3
+
+- Don't fail on `writeFile` if directory already exists
+
 ## 0.6.2
 
 - Fix `deleteFile` typings
