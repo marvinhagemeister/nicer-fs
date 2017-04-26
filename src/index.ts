@@ -27,7 +27,7 @@ export function writeFile(filepath: string, data: string | Buffer, options: any 
   return new Promise<void>((resolve, reject) => {
     const base = path.dirname(filepath);
     mkdirp(base, err => {
-      if (err) {
+      if (err !== null && err.code !== "EEXIST") {
         reject(err);
       }
 
@@ -45,7 +45,7 @@ export function readDir(folder: string): Promise<string[]> {
 
 export function deleteFile(file: string | Buffer): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    fs.unlink(file, err => err ? reject(err) : resolve());
+    fs.unlink(file, err => err !== null ? reject(err) : resolve());
   });
 }
 
