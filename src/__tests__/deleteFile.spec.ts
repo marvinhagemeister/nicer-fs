@@ -1,19 +1,30 @@
 import { assert as t } from "chai";
 import * as path from "path";
 import * as fs from "fs";
-import { deleteFile } from "../index";
+import { remove, mkdir } from "../index";
 
-describe("deleteFile", () => {
-  it("should succeed", () => {
+describe("remove", () => {
+  it("should remove a file", () => {
     const f = path.join(__dirname, "foo.txt");
     fs.writeFileSync(f, "hello world", "utf-8");
-    return deleteFile(f);
+    return remove(f);
   });
 
-  it("should reject Promise on error", () => {
+  it("should remove a directory", async () => {
+    const tmp = path.join(__dirname, "tmp");
+    await mkdir(tmp);
+
+    fs.writeFileSync(path.join(tmp, "foo1.txt"), "hello world", "utf-8");
+    fs.writeFileSync(path.join(tmp, "foo2.txt"), "hello world2", "utf-8");
+    return await remove(tmp);
+  });
+
+  it("should reject Promise on error", async () => {
     const f = path.join(__dirname, "bar.txt");
-    return deleteFile(f)
-      .then(() => t.fail())
-      .catch(err => { /* noop */ });
+
+    try {
+      await remove(f);
+      t.fail();
+    } catch (err) { /* noop */ }
   });
 });

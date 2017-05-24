@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as glob from "glob";
 import * as path from "path";
 import * as mkdirp from "mkdirp";
+import * as rimraf from "rimraf";
 
 export function find(globber: string, options: glob.IOptions = {}): Promise<string[]> {
   return new Promise((resolve, reject) => {
@@ -43,9 +44,9 @@ export function readDir(folder: string): Promise<string[]> {
   });
 }
 
-export function deleteFile(file: string | Buffer): Promise<void> {
+export function remove(fileOrDir: string): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    fs.unlink(file, err => err !== null ? reject(err) : resolve());
+    rimraf(fileOrDir, err => err !== null ? reject(err) : resolve());
   });
 }
 
@@ -55,7 +56,7 @@ export function copyFile(source: string, target: string): Promise<string> {
     read.on("error", (err: Error) => {
       // cleanup, target my be created by the time an error occurs
       const cb = () => reject(err);
-      return deleteFile(target)
+      return remove(target)
         .then(cb)
         .catch(cb);
     });
