@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0
+
+- **Breaking:** `copyFile` is renamed to `copy` and supports directories alongside files
+- **Breaking:** `deleteFile` is renamed to `remove` and supports directories alongside files
+
 ## 0.6.3
 
 - Don't fail on `writeFile` if directory already exists
