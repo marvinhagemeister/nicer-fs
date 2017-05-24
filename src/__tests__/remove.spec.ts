@@ -6,7 +6,7 @@ import { remove, mkdir } from "../index";
 describe("remove", () => {
   it("should remove a file", async () => {
     const f = path.join(__dirname, "foo.txt");
-    fs.writeFileSync(f, "hello world", "utf-8");
+    fs.writeFileSync(f, "hello world", "utf8");
     return await remove(f);
   });
 
@@ -14,8 +14,8 @@ describe("remove", () => {
     const tmp = path.join(__dirname, "tmp");
     await mkdir(tmp);
 
-    fs.writeFileSync(path.join(tmp, "foo1.txt"), "hello world", "utf-8");
-    fs.writeFileSync(path.join(tmp, "foo2.txt"), "hello world2", "utf-8");
+    fs.writeFileSync(path.join(tmp, "foo1.txt"), "hello world", "utf8");
+    fs.writeFileSync(path.join(tmp, "foo2.txt"), "hello world2", "utf8");
     return await remove(tmp);
   });
 

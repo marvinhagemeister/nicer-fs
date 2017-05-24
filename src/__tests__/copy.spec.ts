@@ -8,10 +8,10 @@ describe("copy", () => {
     const source = path.join(__dirname, "tmp.txt");
     const target = path.join(__dirname, "tmp2.txt");
 
-    fs.writeFileSync("./src/__tests__/tmp.txt", "hello world", "utf-8");
+    fs.writeFileSync("./src/__tests__/tmp.txt", "hello world", "utf8");
 
     await copy(source, target);
-    t.equal(fs.readFileSync(target, "utf-8"), "hello world");
+    t.equal(fs.readFileSync(target, "utf8"), "hello world");
     fs.unlinkSync(source);
     fs.unlinkSync(target);
   });
@@ -20,8 +20,8 @@ describe("copy", () => {
     const tmp = path.join(__dirname, "tmp");
     await mkdir(tmp);
 
-    fs.writeFileSync(path.join(tmp, "foo1.txt"), "hello world", "utf-8");
-    fs.writeFileSync(path.join(tmp, "foo2.txt"), "hello world2", "utf-8");
+    fs.writeFileSync(path.join(tmp, "foo1.txt"), "hello world", "utf8");
+    fs.writeFileSync(path.join(tmp, "foo2.txt"), "hello world2", "utf8");
 
     const tmp2 = path.join(__dirname, "tmp2");
     await copy(tmp, tmp2);
