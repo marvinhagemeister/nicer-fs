@@ -13,4 +13,5 @@ is that `nicer-fs` is lighter.
 - `mkdir` - same as `mkdir -p`
 - `copy` - same as `cp [source] [target]`, works for files and folders
 - `remove` - same as `rm -rf myfile myfolder`
+- `exists` - check if a file or folder exists
 - `replaceExtension` - easily replace a file extension
