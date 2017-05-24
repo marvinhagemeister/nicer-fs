@@ -4,6 +4,7 @@
 
 - **Breaking:** `copyFile` is renamed to `copy` and supports directories alongside files
 - **Breaking:** `deleteFile` is renamed to `remove` and supports directories alongside files
+- **NEW:** `exists` function to check if a file or folder exists
 
 ## 0.6.3
 
