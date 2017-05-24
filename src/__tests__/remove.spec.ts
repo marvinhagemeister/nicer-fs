@@ -4,10 +4,10 @@ import * as fs from "fs";
 import { remove, mkdir } from "../index";
 
 describe("remove", () => {
-  it("should remove a file", () => {
+  it("should remove a file", async () => {
     const f = path.join(__dirname, "foo.txt");
     fs.writeFileSync(f, "hello world", "utf-8");
-    return remove(f);
+    return await remove(f);
   });
 
   it("should remove a directory", async () => {

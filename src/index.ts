@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import { ncp, Options as NcpOptions } from "ncp";
 import * as glob from "glob";
 import * as path from "path";
 import * as mkdirp from "mkdirp";
@@ -44,27 +45,28 @@ export function readDir(folder: string): Promise<string[]> {
   });
 }
 
-export function remove(fileOrDir: string): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
-    rimraf(fileOrDir, err => err !== null ? reject(err) : resolve());
-  });
+/** Remove a file, directory or a glob path */
+export function remove(...fileOrDir: string[]): Promise<void[]> {
+  return Promise.all(fileOrDir.map(f => {
+    return new Promise<void>((resolve, reject) => {
+      rimraf(f, err => err !== null ? reject(err) : resolve());
+    });
+  }));
 }
 
-export function copyFile(source: string, target: string): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const read = fs.createReadStream(source);
-    read.on("error", (err: Error) => {
-      // cleanup, target my be created by the time an error occurs
-      const cb = () => reject(err);
-      return remove(target)
-        .then(cb)
-        .catch(cb);
-    });
+/** Copy a file or a directory */
+export async function copy(source: string, target: string, options: NcpOptions = {}): Promise<void> {
+  const currentPath = path.resolve(source);
+  const targetPath = path.resolve(target);
 
-    const write = fs.createWriteStream(target);
-    write.on("error", (err: Error) => reject(err));
-    write.on("close", () => resolve(target));
-    read.pipe(write);
+  if (currentPath === targetPath) {
+    throw new Error("Source and destination must not be the same");
+  }
+
+  await mkdir(path.dirname(targetPath));
+
+  return await new Promise<void>((resolve, reject) => {
+    ncp(currentPath, targetPath, options, err => err !== null ? reject(err) : resolve());
   });
 }
 
