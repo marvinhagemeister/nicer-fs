@@ -9,6 +9,8 @@ is that `nicer-fs` is lighter.
 - `find` - find file by glob pattern
 - `readFile` - promisified `fs.readFile`
 - `writeFile` - promisified `fs.writeFile`
+- `readJson` - safely read json files
+- `writeJson` - safely write json files
 - `readDir` - promisified `fs.readDir`
 - `mkdir` - same as `mkdir -p`
 - `copy` - same as `cp [source] [target]`, works for files and folders
