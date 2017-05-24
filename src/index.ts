@@ -39,6 +39,33 @@ export function writeFile(filepath: string, data: string | Buffer, options: any 
   });
 }
 
+export async function readJson(file: string, encoding: string = "utf8"): Promise<object> {
+  const data = await readFile(file, encoding);
+
+  try {
+    return JSON.parse(data);
+  } catch (err) {
+    throw err;
+  }
+}
+
+export interface JsonOptions {
+  encoding?: string;
+  spaces?: number;
+}
+
+export async function writeJson(file: string, data: object, options: JsonOptions = {}): Promise<void> {
+  const spaces = options.spaces !== undefined ? options.spaces : 2;
+  const encoding = options.encoding !== undefined ? options.encoding : "utf8";
+
+  try {
+    const str = JSON.stringify(data, null, spaces) + "\n";
+    return writeFile(file, str, encoding);
+  } catch (err) {
+    throw err;
+  }
+}
+
 export function readDir(folder: string): Promise<string[]> {
   return new Promise((resolve, reject) => {
     fs.readdir(folder, (err, files) => err ? reject(err) : resolve(files));
