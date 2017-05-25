@@ -105,6 +105,30 @@ export function exists(fileOrDir: string) {
   });
 }
 
+export function open(path: string | Buffer, flags: string | number): Promise<number> {
+  return new Promise((resolve, reject) => {
+    fs.open(path, flags, (err, fd) => err !== null ? reject(err) : resolve(fd));
+  });
+}
+
+export interface WriteResult {
+  written: number;
+  str: string;
+}
+
+export function write(fd: number, data: any): Promise<WriteResult> {
+  return new Promise((resolve, reject) => {
+    fs.write(fd, data, (err, written, str) =>
+      err !== null ? reject(err) : resolve({ written, str }));
+  });
+}
+
+export function close(fd: number): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    fs.close(fd, err => err !== null ? reject(err) : resolve());
+  });
+}
+
 export function replaceExtension(file: string, ext: string): string {
   ext = ext !== "" && !ext.startsWith(".") ? "." + ext : ext;
 
