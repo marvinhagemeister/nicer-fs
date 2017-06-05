@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- Fix npm package not containing `readJSON`.
+
 ## 1.0.0
 
 - **Breaking:** `copyFile` is renamed to `copy` and supports directories alongside files
