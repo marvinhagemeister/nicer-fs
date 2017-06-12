@@ -17,3 +17,4 @@ is that `nicer-fs` is lighter.
 - `remove` - same as `rm -rf myfile myfolder`
 - `exists` - check if a file or folder exists
 - `replaceExtension` - easily replace a file extension
+- `getCallerFileName` - get the name of the file a function is called in
