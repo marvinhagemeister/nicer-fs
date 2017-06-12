@@ -135,3 +135,44 @@ export function replaceExtension(file: string, ext: string): string {
   const nFile = path.basename(file, path.extname(file)) + ext;
   return path.join(path.dirname(file), nFile);
 }
+
+
+interface CustomError extends ErrorConstructor {
+  prepareStackTrace: <T>(err: Error, stack: T) => T;
+}
+
+/**
+ * Get the filename of the calling function. This is a genius trick to abuse
+ * the `stack` property of native `Error` objects.
+ * Taken from https://stackoverflow.com/questions/16697791/nodejs-get-filename-of-caller-function/29581862#29581862
+ */
+export function getCallerFileName(): string | undefined {
+  const originalFunc = (Error as CustomError).prepareStackTrace;
+
+  let caller;
+  try {
+    const error = new Error();
+    let current;
+
+    (Error as CustomError).prepareStackTrace = (err: Error, stack: any) => {
+      return stack;
+    };
+
+    if (error.stack !== undefined) {
+      current = (error.stack as any).shift().getFileName();
+
+      while (error.stack.length) {
+        caller = (error.stack as any).shift().getFileName();
+
+        if (current !== caller) {
+          break;
+        }
+      }
+    }
+  } catch (e) {
+    /* noop */
+  }
+
+  (Error as CustomError).prepareStackTrace = originalFunc;
+  return caller;
+}
