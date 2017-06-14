@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1
+
+- Fix wrong return type for `exists()`
+
 ## 1.1.0
 
 - **NEW:** Use `getCallerFileName` to get the name of the file a function is called in
