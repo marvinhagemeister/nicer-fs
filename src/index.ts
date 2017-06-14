@@ -97,7 +97,7 @@ export async function copy(source: string, target: string, options: NcpOptions =
   });
 }
 
-export function exists(fileOrDir: string) {
+export function exists(fileOrDir: string): Promise<boolean> {
   fileOrDir = path.resolve(fileOrDir);
 
   return new Promise((resolve, reject) => {
