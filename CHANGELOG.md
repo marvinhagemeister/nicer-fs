@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0
+
+- Uprade requirements to node `8.0.0` (uses `util.promisify`)
+- Use `fs.copyFile` where available
+- remove `getCallerFileName`. This shouldn't have been part of this package in the first place in retrospect :/
+
 ## 1.1.1
 
 - Fix wrong return type for `exists()`
