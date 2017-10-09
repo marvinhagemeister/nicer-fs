@@ -3,6 +3,9 @@
   "version": "1.1.1",
   "description": "Collection of helpful utillity functions when dealing with files in node",
   "main": "dist/index.js",
+  "engines": {
+    "node" : ">=8.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:marvinhagemeister/nicer-fs.git"
@@ -12,7 +15,7 @@
     "test-watch": "npm t -- -w",
     "lint": "tslint 'src/**/*.ts'",
     "build": "tsc",
-    "prepublish": "npm run lint && npm t && npm run build"
+    "prepublishOnly": "npm run lint && npm t && npm run build"
   },
   "author": "Marvin Hagemeister <marvin@marvinhagemeister.de>",
   "license": "MIT",
@@ -23,6 +26,7 @@
     "@types/mocha": "^2.2.41",
     "chai": "^3.5.0",
     "mocha": "^3.3.0",
+    "prettier": "^1.7.4",
     "ts-node": "^3.0.2",
     "tslint": "^5.1.0",
     "typescript": "^2.2.2"
@@ -30,7 +34,7 @@
   "dependencies": {
     "@types/glob": "^5.0.30",
     "@types/ncp": "^2.0.0",
-    "@types/node": "^7.0.13",
+    "@types/node": "^8.0.33",
     "@types/rimraf": "^0.0.28",
     "glob": "^7.1.1",
     "mkdirp": "^0.5.1",

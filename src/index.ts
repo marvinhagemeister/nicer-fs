@@ -4,6 +4,7 @@ import * as glob from "glob";
 import * as path from "path";
 import * as mkdirp from "mkdirp";
 import * as rimraf from "rimraf";
+import { promisify } from "util";
 
 export function find(globber: string, options: glob.IOptions = {}): Promise<string[]> {
   return new Promise((resolve, reject) => {
@@ -66,11 +67,7 @@ export async function writeJson(file: string, data: object, options: JsonOptions
   }
 }
 
-export function readDir(folder: string): Promise<string[]> {
-  return new Promise((resolve, reject) => {
-    fs.readdir(folder, (err, files) => err ? reject(err) : resolve(files));
-  });
-}
+export const readDir = promisify(fs.readdir);
 
 /** Remove a file, directory or a glob path */
 export function remove(...fileOrDir: string[]): Promise<void[]> {
@@ -81,22 +78,29 @@ export function remove(...fileOrDir: string[]): Promise<void[]> {
   }));
 }
 
+export const lstat = promisify(fs.lstat);
+
 /** Copy a file or a directory */
-export async function copy(source: string, target: string, options: NcpOptions = {}): Promise<void> {
+export async function copy(source: string, dest: string, flags?: number): Promise<void> {
+  const targetPath = path.resolve(dest);
   const currentPath = path.resolve(source);
-  const targetPath = path.resolve(target);
-
-  if (currentPath === targetPath) {
-    throw new Error("Source and destination must not be the same");
-  }
-
   await mkdir(path.dirname(targetPath));
 
-  return await new Promise<void>((resolve, reject) => {
-    ncp(currentPath, targetPath, options, err => err !== null ? reject(err) : resolve());
+  const stats = await lstat(source);
+
+  return new Promise<void>((resolve, reject) => {
+    // TODO: Node typings are not updated yet
+    if (stats.isFile() && (fs as any).copyFile !== undefined) {
+      (fs as any).copyFile(currentPath, dest, flags, (err: Error) => err !== null ? reject(err) : resolve());
+    } else {
+      ncp(currentPath, targetPath, err => err !== null ? reject(err) : resolve());
+    }
   });
 }
 
+export const open = promisify(fs.open);
+export const write = promisify(fs.write);
+export const close = promisify(fs.close);
 export function exists(fileOrDir: string): Promise<boolean> {
   fileOrDir = path.resolve(fileOrDir);
 
@@ -105,74 +109,9 @@ export function exists(fileOrDir: string): Promise<boolean> {
   });
 }
 
-export function open(path: string | Buffer, flags: string | number): Promise<number> {
-  return new Promise((resolve, reject) => {
-    fs.open(path, flags, (err, fd) => err !== null ? reject(err) : resolve(fd));
-  });
-}
-
-export interface WriteResult {
-  written: number;
-  str: string;
-}
-
-export function write(fd: number, data: any): Promise<WriteResult> {
-  return new Promise((resolve, reject) => {
-    fs.write(fd, data, (err, written, str) =>
-      err !== null ? reject(err) : resolve({ written, str }));
-  });
-}
-
-export function close(fd: number): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
-    fs.close(fd, err => err !== null ? reject(err) : resolve());
-  });
-}
-
 export function replaceExtension(file: string, ext: string): string {
   ext = ext !== "" && !ext.startsWith(".") ? "." + ext : ext;
 
   const nFile = path.basename(file, path.extname(file)) + ext;
   return path.join(path.dirname(file), nFile);
-}
-
-
-interface CustomError extends ErrorConstructor {
-  prepareStackTrace: <T>(err: Error, stack: T) => T;
-}
-
-/**
- * Get the filename of the calling function. This is a genius trick to abuse
- * the `stack` property of native `Error` objects.
- * Taken from https://stackoverflow.com/questions/16697791/nodejs-get-filename-of-caller-function/29581862#29581862
- */
-export function getCallerFileName(): string | undefined {
-  const originalFunc = (Error as CustomError).prepareStackTrace;
-
-  let caller;
-  try {
-    const error = new Error();
-    let current;
-
-    (Error as CustomError).prepareStackTrace = (err: Error, stack: any) => {
-      return stack;
-    };
-
-    if (error.stack !== undefined) {
-      current = (error.stack as any).shift().getFileName();
-
-      while (error.stack.length) {
-        caller = (error.stack as any).shift().getFileName();
-
-        if (current !== caller) {
-          break;
-        }
-      }
-    }
-  } catch (e) {
-    /* noop */
-  }
-
-  (Error as CustomError).prepareStackTrace = originalFunc;
-  return caller;
 }
